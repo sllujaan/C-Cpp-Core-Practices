@@ -1,11 +1,26 @@
 #pragma once
+#include<Windows.h>
 #include<iostream>
 #include<string>
 #include<filesystem>
+#include<vector>
+#include<strsafe.h>
+#include <tchar.h> 
+#include <stdio.h>
+
 using namespace std;
 
-namespace fs = std;
 
+namespace MyFile {
+	class Directory {
+	private:
+		vector<int> _vector;
 
-string path = "C:\\Users\\SALMAN-ALTAF\\Desktop";
+		void readDir(wstring path);
 
+	public:
+		Directory() {};
+		~Directory();
+		void init();
+	};
+}

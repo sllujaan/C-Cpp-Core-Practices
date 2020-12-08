@@ -8,14 +8,19 @@
 #include"directory.h"
 using namespace std;
 
+
 int main()
 {
-    std::cout << "Hello World!\n";
     
-    c_thread::Thread _thread;
-    _thread.init();
+    MyFile::Directory dir;
+    dir.init();
 
     cout << "main done" << endl;
+
+
+    /*c_thread::Thread _thread;
+    _thread.init();*/
+
     
     /*FunctionPointer fp;
     fp.init();*/

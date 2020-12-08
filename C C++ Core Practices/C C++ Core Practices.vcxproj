@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="directory.cpp" />
     <ClCompile Include="FunctionPointers.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Thread.cpp" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="directory.h" />
     <ClInclude Include="FunctionPointers.h" />
+    <ClInclude Include="NameSpace.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="TypeDefinition.h" />
   </ItemGroup>
