@@ -3,13 +3,20 @@
 
 #include<iostream>
 #include"FunctionPointers.h"
+#include"Thread.h"
 using namespace std;
 
 int main()
 {
     std::cout << "Hello World!\n";
-    FunctionPointer fp;
-    fp.init();
+    
+    c_thread::Thread _thread;
+    _thread.init();
+
+    cout << "main done" << endl;
+    
+    /*FunctionPointer fp;
+    fp.init();*/
     
 }
 

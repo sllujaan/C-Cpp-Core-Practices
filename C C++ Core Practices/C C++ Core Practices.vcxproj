@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="FunctionPointers.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FunctionPointers.h" />
+    <ClInclude Include="Thread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
