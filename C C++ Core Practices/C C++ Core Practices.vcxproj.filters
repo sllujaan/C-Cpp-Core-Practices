@@ -35,5 +35,8 @@
     <ClInclude Include="TypeDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="directory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

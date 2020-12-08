@@ -5,6 +5,7 @@
 #include"FunctionPointers.h"
 #include"Thread.h"
 #include"TypeDefinition.h"
+#include"directory.h"
 using namespace std;
 
 int main()
