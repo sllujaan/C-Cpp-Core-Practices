@@ -4,6 +4,7 @@
 #include<iostream>
 #include"FunctionPointers.h"
 #include"Thread.h"
+#include"TypeDefinition.h"
 using namespace std;
 
 int main()
