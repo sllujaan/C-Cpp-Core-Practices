@@ -15,8 +15,6 @@ int main()
     MyFile::Directory dir;
     dir.init();
 
-    cout << "main done" << endl;
-
 
     /*c_thread::Thread _thread;
     _thread.init();*/
