@@ -148,8 +148,11 @@
     <ClInclude Include="directory.h" />
     <ClInclude Include="FunctionPointers.h" />
     <ClInclude Include="NameSpace.h" />
+    <ClInclude Include="predefined_macros.h" />
+    <ClInclude Include="Static.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="TypeDefinition.h" />
+    <ClInclude Include="Variadic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

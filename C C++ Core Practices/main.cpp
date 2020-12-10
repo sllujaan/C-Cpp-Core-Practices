@@ -2,19 +2,15 @@
 //
 
 #include<iostream>
-#include"FunctionPointers.h"
-#include"Thread.h"
-#include"TypeDefinition.h"
-#include"directory.h"
+#include"Static.h"
 using namespace std;
 
 
 int main()
 {
-    
-    MyFile::Directory dir;
-    dir.init();
+    myVariable = 20;
 
+    cout << myVariable << endl;
 
     /*c_thread::Thread _thread;
     _thread.init();*/

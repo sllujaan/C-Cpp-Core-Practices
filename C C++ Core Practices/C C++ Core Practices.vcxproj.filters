@@ -44,5 +44,14 @@
     <ClInclude Include="NameSpace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="predefined_macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Variadic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Static.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
