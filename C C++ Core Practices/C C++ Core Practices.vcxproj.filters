@@ -53,5 +53,8 @@
     <ClInclude Include="Static.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Deprecated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

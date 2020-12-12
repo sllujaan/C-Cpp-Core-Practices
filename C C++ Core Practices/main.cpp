@@ -2,15 +2,15 @@
 //
 
 #include<iostream>
-#include"Static.h"
+#include"Deprecated.h"
 using namespace std;
+
+
 
 
 int main()
 {
-    myVariable = 20;
-
-    cout << myVariable << endl;
+    newFunction();
 
     /*c_thread::Thread _thread;
     _thread.init();*/

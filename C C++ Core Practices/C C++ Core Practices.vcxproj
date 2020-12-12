@@ -145,6 +145,7 @@
     <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Deprecated.h" />
     <ClInclude Include="directory.h" />
     <ClInclude Include="FunctionPointers.h" />
     <ClInclude Include="NameSpace.h" />
