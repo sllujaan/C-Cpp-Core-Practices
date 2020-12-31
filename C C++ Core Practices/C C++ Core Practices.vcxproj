@@ -141,13 +141,16 @@
   <ItemGroup>
     <ClCompile Include="directory.cpp" />
     <ClCompile Include="FunctionPointers.cpp" />
+    <ClCompile Include="ListDirectory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Static.cpp" />
     <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Deprecated.h" />
     <ClInclude Include="directory.h" />
     <ClInclude Include="FunctionPointers.h" />
+    <ClInclude Include="ListDirectory.h" />
     <ClInclude Include="NameSpace.h" />
     <ClInclude Include="predefined_macros.h" />
     <ClInclude Include="Static.h" />

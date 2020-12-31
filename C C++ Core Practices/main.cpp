@@ -2,23 +2,14 @@
 //
 
 #include<iostream>
-#include"Deprecated.h"
-using namespace std;
+#include"ListDirectory.h"
 
 
 
 
 int main()
 {
-    newFunction();
-
-    /*c_thread::Thread _thread;
-    _thread.init();*/
-
-    
-    /*FunctionPointer fp;
-    fp.init();*/
-    
+    initListDir();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

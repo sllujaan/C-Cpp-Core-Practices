@@ -14,6 +14,7 @@ using namespace std;
 * dss
 * ddddddddweee
 */
+//__declspec(deprecated)
 [[deprecated]]
 void oldFunction() {
     cout << "old function" << endl;

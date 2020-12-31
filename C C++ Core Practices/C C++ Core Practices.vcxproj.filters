@@ -27,6 +27,12 @@
     <ClCompile Include="directory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Static.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListDirectory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FunctionPointers.h">
@@ -54,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Deprecated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListDirectory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
