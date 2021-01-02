@@ -2,14 +2,19 @@
 //
 
 #include<iostream>
+#include"Log.h"
 #include"ListDirectory.h"
-
 
 
 
 int main()
 {
+
     initListDir();
+
+
+    LOG("----Finished----");
+    std::cin.get();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -7,20 +7,24 @@
 #include <strsafe.h>
 
 
+int readDir(const char* path) {
+	std::string newPath = path;
+	newPath += +"\\*";
 
+	//newPath.c_str();
+	/*newPath.c_str();
+	char arr[3];
+	const char* cPtr = "ab";
+	strcpy_s<3>(arr, cPtr);*/
 
-
-
-
-
-int initListDir() {
+	
 
 	WIN32_FIND_DATA ffd;
 	LARGE_INTEGER filesize;
-	TCHAR szDir[MAX_PATH] = L"C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir\\*";
-	size_t length_of_arg;
+	TCHAR szDir[MAX_PATH];
+	strcpy_s<MAX_PATH>(szDir, newPath.c_str());
 	HANDLE hFind = INVALID_HANDLE_VALUE;
-	DWORD dwError = 0;
+
 
 
 	// Find the first file in the directory.
@@ -41,6 +45,7 @@ int initListDir() {
 		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
 			_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
+			
 		}
 		else
 		{
@@ -52,6 +57,16 @@ int initListDir() {
 
 
 
+	return 0;
+}
+
+
+
+
+
+int initListDir() {
+
+	readDir("C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir");
 
 	return 0;
 

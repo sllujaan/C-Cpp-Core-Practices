@@ -9,7 +9,7 @@ void MyFile::Directory::readDir(wstring path)
 	//LPCWSTR _path = L"C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir\\*";
 
 
-	hFind = FindFirstFile(_path.c_str(), &ffd);
+	hFind = FindFirstFile((LPCSTR)_path.c_str(), &ffd);
 
 	if (hFind == INVALID_HANDLE_VALUE)
 	{
