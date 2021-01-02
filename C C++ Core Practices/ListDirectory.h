@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <strsafe.h>
 
+#define NOT_DIR(X) (strcmp(X, ".") == 0) || (strcmp(X, "..") == 0)
+
 
 int readDir(const char* path) {
 	std::string newPath = path;
@@ -44,13 +46,28 @@ int readDir(const char* path) {
 	{
 		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
-			_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
+			LOG_ANY(_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName));
+			//_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
 			
+			if (NOT_DIR(ffd.cFileName)) {
+				LOG("Not Directory");
+			}
+			else {
+				newPath = path;
+				newPath.append("\\");
+				newPath.append(ffd.cFileName);
+				LOG(newPath);
+				readDir(newPath.c_str());
+			}
+
 		}
 		else
 		{
+
 			filesize.LowPart = ffd.nFileSizeLow;
 			filesize.HighPart = ffd.nFileSizeHigh;
+			
+			LOG(path);
 			_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
 		}
 	} while (FindNextFile(hFind, &ffd) != 0);
@@ -66,7 +83,7 @@ int readDir(const char* path) {
 
 int initListDir() {
 
-	readDir("C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir");
+	readDir("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples");
 
 	return 0;
 
