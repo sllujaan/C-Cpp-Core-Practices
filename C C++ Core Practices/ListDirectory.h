@@ -82,6 +82,23 @@ int readDir(const char* path) {
 
 
 
+void RefreshDirectory(LPTSTR lpDir)
+{
+	// This is where you might place code to refresh your
+	// directory listing, but not the subtree because it
+	// would not be necessary.
+
+	_tprintf(TEXT("Directory (%s) changed.\n"), lpDir);
+}
+
+void RefreshTree(LPTSTR lpDrive)
+{
+	// This is where you might place code to refresh your
+	// directory listing, including the subtree.
+
+	_tprintf(TEXT("Directory tree (%s) changed.\n"), lpDrive);
+}
+
 
 
 errno_t WatchDirectory(LPCSTR lpDir) {
@@ -93,14 +110,16 @@ errno_t WatchDirectory(LPCSTR lpDir) {
 
 
 	_tsplitpath_s(lpDir, lpDrive, 4, NULL, 0, lpFile, _MAX_FNAME, lpExt, _MAX_EXT);
-
+	LOG(lpFile);
+	LOG(lpExt);
+	LOG(lpDrive);
 
 	// Watch the directory for file creation and deletion. 
 
 	dwChangeHandles[0] = FindFirstChangeNotification(
 		lpDir,                         // directory to watch 
 		FALSE,                         // do not watch subtree 
-		FILE_NOTIFY_CHANGE_FILE_NAME); // watch file name changes 
+		FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME); // watch file name changes 
 
 	if (dwChangeHandles[0] == INVALID_HANDLE_VALUE)
 	{
@@ -111,7 +130,7 @@ errno_t WatchDirectory(LPCSTR lpDir) {
 	// Watch the subtree for directory creation and deletion. 
 
 	//dwChangeHandles[1] = FindFirstChangeNotification(
-	//	lpDrive,                       // directory to watch 
+	//	lpDir,                       // directory to watch 
 	//	TRUE,                          // watch the subtree 
 	//	FILE_NOTIFY_CHANGE_DIR_NAME);  // watch dir name changes 
 
@@ -147,6 +166,7 @@ errno_t WatchDirectory(LPCSTR lpDir) {
 		case WAIT_OBJECT_0:
 			// A file was created, renamed, or deleted in the directory.
 			// Refresh this directory and restart the notification.
+			RefreshDirectory((LPTSTR)lpDir);
 			if (FindNextChangeNotification(dwChangeHandles[0]) == FALSE)
 			{
 				printf("\n ERROR: FindNextChangeNotification function failed.\n");
@@ -157,6 +177,7 @@ errno_t WatchDirectory(LPCSTR lpDir) {
 		case WAIT_OBJECT_0 + 1:
 			// A directory was created, renamed, or deleted.
 			// Refresh the tree and restart the notification.
+			RefreshTree((LPTSTR)lpDir);
 			if (FindNextChangeNotification(dwChangeHandles[1]) == FALSE)
 			{
 				printf("\n ERROR: FindNextChangeNotification function failed.\n");
