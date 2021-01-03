@@ -6,12 +6,11 @@
 #include"ListDirectory.h"
 
 
-
 int main()
 {
 
-    initListDir();
-
+    
+    initDirectoryChanges();
 
     LOG("----Finished----");
     std::cin.get();

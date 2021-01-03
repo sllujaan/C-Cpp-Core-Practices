@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CP_DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CP_DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="directory.cpp" />
+    <ClCompile Include="File\File.cpp" />
     <ClCompile Include="FunctionPointers.cpp" />
     <ClCompile Include="ListDirectory.cpp" />
     <ClCompile Include="main.cpp" />
@@ -151,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Deprecated.h" />
     <ClInclude Include="directory.h" />
+    <ClInclude Include="File\File.h" />
     <ClInclude Include="FunctionPointers.h" />
     <ClInclude Include="ListDirectory.h" />
     <ClInclude Include="Log.h" />
