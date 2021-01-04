@@ -80,8 +80,6 @@ int readDir(const char* path) {
 }
 
 
-
-
 void RefreshDirectory(LPTSTR lpDir)
 {
 	// This is where you might place code to refresh your
@@ -213,6 +211,49 @@ errno_t WatchDirectory(LPCSTR lpDir) {
 
 
 
+errno_t ReadDirChangeInfo(LPCSTR filePath) {
+
+	HANDLE _hFile = CreateFileA(
+		filePath,
+		0,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		FILE_FLAG_BACKUP_SEMANTICS,
+		NULL
+	);
+
+	if (_hFile == INVALID_HANDLE_VALUE) {
+		std::cout << "cannot open the Directory: " << filePath << std::endl;
+		return 1;
+	}
+
+	/*const int size = 10;
+	void* lpBuffer[size];
+
+	ReadDirectoryChangesW(
+		_hFile,
+		lpBuffer,
+		size,
+		true,
+		,
+
+
+	)*/
+
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -225,9 +266,10 @@ int initListDir() {
 }
 
 
+
 int initDirectoryChanges() {
 
-	WatchDirectory("C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir");
-
+	//WatchDirectory("C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir");
+	ReadDirChangeInfo("C:\\Users\\SALMAN-ALTAF\\Desktop\\testDir");
 	return 0;
 }

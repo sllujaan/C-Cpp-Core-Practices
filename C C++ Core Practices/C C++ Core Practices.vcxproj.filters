@@ -74,5 +74,8 @@
     <ClInclude Include="File\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sal_Annotations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

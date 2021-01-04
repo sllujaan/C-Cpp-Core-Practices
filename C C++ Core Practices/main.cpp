@@ -3,14 +3,14 @@
 
 #include<iostream>
 #include"Log.h"
-#include"ListDirectory.h"
+#include"Sal_Annotations.h"
 
 
 int main()
 {
 
+    initSalNot();
     
-    initDirectoryChanges();
 
     LOG("----Finished----");
     std::cin.get();
