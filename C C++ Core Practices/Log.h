@@ -8,3 +8,7 @@
 #define LOG(X)
 #define LOG_ANY(X)
 #endif
+
+
+#define TASK_SUCCESS 0
+#define TASK_FAILURE 1

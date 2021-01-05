@@ -3,14 +3,23 @@
 
 #include<iostream>
 #include"Log.h"
-#include"Sal_Annotations.h"
+#include"File/File.h"
 
 
 int main()
 {
-
-    initSalNot();
     
+    MY_FILES::FILE_TREE _fileTree;
+    MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
+    treeItem.name = L"abc.txt";
+    treeItem.level = 1;
+    treeItem.parentName = nullptr;
+    treeItem.type = "file";
+
+    _fileTree.addTreeItem(treeItem);
+    _fileTree.print();
+
+
 
     LOG("----Finished----");
     std::cin.get();
