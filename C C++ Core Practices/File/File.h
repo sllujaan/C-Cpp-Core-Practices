@@ -26,18 +26,20 @@ namespace MY_FILES {
 		//structure for caching tree items into specific levels for better retrieval or data
 		struct FILE_TREE_STRUCT_CACHED {
 			size_t CACHED_LEVEL;
-			std::vector<FILE_TREE_STRUCT&> tree;
+			std::vector<FILE_TREE_STRUCT*> tree;
 		};
 		//instance of cached tree structure
 		std::vector<FILE_TREE_STRUCT_CACHED> treeCached;
 		//init cache
 		errno_t initTreeCach();
 		errno_t addTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
+		errno_t createPushTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
 
 	public:
 		FILE_TREE();
 		errno_t addTreeItem(FILE_TREE_STRUCT treeItem);
 		void print();
+		void printCashed();
 
 	};
 }

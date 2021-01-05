@@ -18,6 +18,7 @@ int main()
 
     _fileTree.addTreeItem(treeItem);
     _fileTree.print();
+    _fileTree.printCashed();
 
 
 
