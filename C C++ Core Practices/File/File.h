@@ -29,9 +29,10 @@ namespace MY_FILES {
 			std::vector<FILE_TREE_STRUCT&> tree;
 		};
 		//instance of cached tree structure
-		FILE_TREE_STRUCT_CACHED treeCached;
+		std::vector<FILE_TREE_STRUCT_CACHED> treeCached;
 		//init cache
 		errno_t initTreeCach();
+		errno_t addTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
 
 	public:
 		FILE_TREE();
