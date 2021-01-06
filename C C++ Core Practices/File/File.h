@@ -9,6 +9,7 @@
 
 
 
+
 namespace MY_FILES {
 
 	struct FILE_TREE_STRUCT {
@@ -17,7 +18,8 @@ namespace MY_FILES {
 		size_t level;
 		LPCSTR type;
 	};
- 
+
+	BOOL operator == (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);
 
 
 	class FILE_TREE {
@@ -30,14 +32,16 @@ namespace MY_FILES {
 		};
 		//instance of cached tree structure
 		std::vector<FILE_TREE_STRUCT_CACHED> treeCached;
-		//init cache
-		errno_t initTreeCach();
+		
 		errno_t addTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
 		errno_t createPushTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
+		BOOL isItemExists(std::vector<FILE_TREE_STRUCT*>& tree, LPCWSTR name);
 
 	public:
 		FILE_TREE();
 		errno_t addTreeItem(FILE_TREE_STRUCT treeItem);
+		//init cache
+		errno_t initTreeCach();
 		void print();
 		void printCashed();
 

@@ -16,11 +16,26 @@ int main()
     treeItem.parentName = nullptr;
     treeItem.type = "file";
 
+    MY_FILES::FILE_TREE_STRUCT treeItem2 = { 0 };
+    treeItem2.name = L"def.txt";
+    treeItem2.level = 1;
+    treeItem2.parentName = nullptr;
+    treeItem2.type = "dir";
+
     _fileTree.addTreeItem(treeItem);
+    _fileTree.addTreeItem(treeItem2);
+
+    _fileTree.addTreeItem(treeItem);
+    _fileTree.addTreeItem(treeItem2);
+    
     _fileTree.print();
+
+    _fileTree.initTreeCach();
+    
     _fileTree.printCashed();
 
 
+ 
 
     LOG("----Finished----");
     std::cin.get();

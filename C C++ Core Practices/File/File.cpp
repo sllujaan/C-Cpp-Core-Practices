@@ -1,5 +1,15 @@
 #include "File.h"
 
+
+BOOL MY_FILES::operator == (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct) {
+	if (str.name == nullptr) return TRUE;
+	if (str.type == nullptr) return TRUE;
+	if (str.level < 1) return TRUE;
+
+	return FALSE;
+
+}
+
 errno_t MY_FILES::FILE_TREE::initTreeCach()
 {
 	//1. iterate through all items of the tree.
@@ -20,9 +30,12 @@ errno_t MY_FILES::FILE_TREE::initTreeCach()
 
 errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
 {
-	//1. find that level in cached tree and
+	//1. find the level in cached tree.
+	
+	//2. find if the name of item already exists at that level in cached tree. if not
 	//   insert that item's address in cache tree at that level.
-	//2. if the level is not found in cached tree
+
+	//3. if the level is not found in cached tree
 	//   create that new level in cached tree and
 	//   insert that item's address in cache tree at that level.
 	BOOL levelFound = FALSE;
@@ -37,6 +50,13 @@ errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
 		//1. find that level in cached tree and
 		//   insert that item's address in cache tree at that level.
 		if (this->treeCached[0].CACHED_LEVEL == level) {
+			//2. find if the name of item already exists at that level in cached tree. if not
+			//   insert that item's address in cache tree at that level.
+
+			/*if (!this->isItemExists(treeCached[0].tree, _tree.name)) {
+				this->treeCached[0].tree.push_back(&_tree);
+			}*/
+
 			this->treeCached[0].tree.push_back(&_tree);
 			levelFound = TRUE;
 			return TASK_SUCCESS;
@@ -45,7 +65,7 @@ errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
 	}
 
 
-	//2. if the level is not found in cached tree
+	//3. if the level is not found in cached tree
 	//   create that new level in cached tree and
 	//   insert that item's address in cache tree at that level.
 	if (levelFound == FALSE) {
@@ -70,6 +90,16 @@ errno_t MY_FILES::FILE_TREE::createPushTreeCach(size_t level, FILE_TREE_STRUCT& 
 	return TASK_SUCCESS;
 }
 
+BOOL MY_FILES::FILE_TREE::isItemExists(std::vector<FILE_TREE_STRUCT*>& tree, LPCWSTR name)
+{
+
+	for (int i = 0; i < tree.size(); i++) {
+		//if (wcscmp(tree[i]->name, name)) return TRUE;
+	}
+
+	return FALSE;
+}
+
 MY_FILES::FILE_TREE::FILE_TREE()
 {
 
@@ -77,9 +107,12 @@ MY_FILES::FILE_TREE::FILE_TREE()
 
 errno_t MY_FILES::FILE_TREE::addTreeItem(FILE_TREE_STRUCT treeItem)
 {
-	this->tree.push_back(treeItem);
+	if(treeItem == NULL) {
+		std::cout << "treeItem was invalid or NULL" << std::endl;
+		return TASK_FAILURE;
+	}
 
-	this->initTreeCach();
+	this->tree.push_back(treeItem);
 
 	return TASK_SUCCESS;
 }
@@ -97,7 +130,16 @@ void MY_FILES::FILE_TREE::print()
 void MY_FILES::FILE_TREE::printCashed()
 {
 	for (int i = 0; i < this->treeCached.size(); i++) {
-		std::wcout << this->treeCached[i].tree[0]->name << "\t";
-		std::cout << "structure address:\t" << this->treeCached[i].tree[0] << std::endl;
+		std::cout << "printing cashed level: \t";
+		std::wcout << this->treeCached[i].CACHED_LEVEL << std::endl;
+
+		for (size_t j = 0; j < this->treeCached[i].tree.size(); j++)
+		{
+			//std::wcout << this->treeCached[i].tree[j]->name << std::endl;
+			std::cout << "structure address:\t" << this->treeCached[i].tree[j] << std::endl;
+		}
+
+		/*std::wcout << this->treeCached[i].tree[0]->level << "\t";
+		std::cout << "structure address:\t" << this->treeCached[i].tree[0] << std::endl;*/
 	}
 }
