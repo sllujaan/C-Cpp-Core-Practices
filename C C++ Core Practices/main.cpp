@@ -15,12 +15,14 @@ int main()
     treeItem.level = 1;
     treeItem.parentName = nullptr;
     treeItem.type = "file";
+    treeItem.path = L"C:\\dir";
 
     MY_FILES::FILE_TREE_STRUCT treeItem2 = { 0 };
     treeItem2.name = L"def.txt";
     treeItem2.level = 2;
     treeItem2.parentName = nullptr;
     treeItem2.type = "dir";
+    treeItem2.path = L"C:\\dir";
 
     _fileTree.addTreeItem(treeItem);
     _fileTree.addTreeItem(treeItem2);
@@ -28,12 +30,14 @@ int main()
     _fileTree.addTreeItem(treeItem);
     _fileTree.addTreeItem(treeItem2);
     
-    _fileTree.print();
-
+    LOG_ANY(
+        _fileTree.print();
+    );
     _fileTree.initTreeCach();
     
-    _fileTree.printCashed();
-
+    LOG_ANY(
+        _fileTree.printCashed();
+    );
 
  
 

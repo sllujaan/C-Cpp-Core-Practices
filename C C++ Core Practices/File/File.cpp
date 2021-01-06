@@ -5,6 +5,7 @@ BOOL MY_FILES::operator == (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct) {
 	if (str.name == nullptr) return TRUE;
 	if (str.type == nullptr) return TRUE;
 	if (str.level < 1) return TRUE;
+	if (str.path == nullptr) return TRUE;
 
 	return FALSE;
 

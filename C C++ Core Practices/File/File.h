@@ -17,6 +17,7 @@ namespace MY_FILES {
 		LPCWSTR parentName;
 		size_t level;
 		LPCSTR type;
+		LPCWSTR path;
 	};
 
 	BOOL operator == (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);
