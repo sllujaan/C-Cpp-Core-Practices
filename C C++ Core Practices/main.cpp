@@ -18,7 +18,7 @@ int main()
 
     MY_FILES::FILE_TREE_STRUCT treeItem2 = { 0 };
     treeItem2.name = L"def.txt";
-    treeItem2.level = 1;
+    treeItem2.level = 2;
     treeItem2.parentName = nullptr;
     treeItem2.type = "dir";
 

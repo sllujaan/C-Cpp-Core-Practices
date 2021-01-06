@@ -49,15 +49,18 @@ errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
 	for (int i = 0; i < this->treeCached.size(); i++) {
 		//1. find that level in cached tree and
 		//   insert that item's address in cache tree at that level.
-		if (this->treeCached[0].CACHED_LEVEL == level) {
+		if (this->treeCached[i].CACHED_LEVEL == level) {
 			//2. find if the name of item already exists at that level in cached tree. if not
 			//   insert that item's address in cache tree at that level.
 
-			/*if (!this->isItemExists(treeCached[0].tree, _tree.name)) {
-				this->treeCached[0].tree.push_back(&_tree);
-			}*/
+			if (!this->isItemExists(treeCached[i].tree, _tree.name)) {
+				this->treeCached[i].tree.push_back(&_tree);
+			}
+			else {
+				std::cout << "item already exists in cache at level: " << level << std::endl;
+			}
 
-			this->treeCached[0].tree.push_back(&_tree);
+			//this->treeCached[0].tree.push_back(&_tree);
 			levelFound = TRUE;
 			return TASK_SUCCESS;
 		}
@@ -94,7 +97,7 @@ BOOL MY_FILES::FILE_TREE::isItemExists(std::vector<FILE_TREE_STRUCT*>& tree, LPC
 {
 
 	for (int i = 0; i < tree.size(); i++) {
-		//if (wcscmp(tree[i]->name, name)) return TRUE;
+		if (wcscmp(tree[i]->name, name) == 0) return TRUE;
 	}
 
 	return FALSE;
