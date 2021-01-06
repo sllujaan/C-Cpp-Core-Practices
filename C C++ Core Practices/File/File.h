@@ -43,6 +43,8 @@ namespace MY_FILES {
 		errno_t addTreeItem(FILE_TREE_STRUCT treeItem);
 		//init cache
 		errno_t initTreeCach();
+		std::vector<FILE_TREE_STRUCT*>* getTreeIitemsByLevel(size_t level);
+
 		void print();
 		void printCashed();
 

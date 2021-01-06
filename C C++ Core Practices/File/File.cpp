@@ -29,6 +29,27 @@ errno_t MY_FILES::FILE_TREE::initTreeCach()
 	return TASK_SUCCESS;
 }
 
+std::vector<MY_FILES::FILE_TREE_STRUCT*>* MY_FILES::FILE_TREE::getTreeIitemsByLevel(size_t level)
+{
+	if (this->treeCached.size() == 0) {
+		std::cout << "cached tree in empty in: " << __FUNCTION__;
+		std::cout<< " at line: "<<__LINE__<< std::endl;
+		return nullptr;
+	}
+
+	for (int i = 0; i < this->treeCached.size(); i++) {
+		if (this->treeCached[i].CACHED_LEVEL == level) {
+			return &this->treeCached[i].tree;
+		}
+	}
+
+
+	std::cout << "no level (" << level << ") exists in cached tree in (";
+	std::cout << __FUNCTION__ << ") ";
+	std::cout << "at line: " << __LINE__ << std::endl;
+	return nullptr;
+}
+
 errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
 {
 	//1. find the level in cached tree.

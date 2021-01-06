@@ -39,7 +39,18 @@ int main()
         _fileTree.printCashed();
     );
 
- 
+
+    _fileTree.getTreeIitemsByLevel(4);
+
+    /*int a = 10;
+    int* i = nullptr;
+    int& j = *i;
+
+    std::cout << &j << std::endl;
+    if (&j == nullptr) {
+        LOG("j is null");
+    }*/
+
 
     LOG("----Finished----");
     std::cin.get();
