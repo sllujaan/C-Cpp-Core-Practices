@@ -11,6 +11,16 @@ BOOL MY_FILES::operator == (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct) {
 
 }
 
+BOOL MY_FILES::operator != (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct)
+{
+	if (str.name == nullptr) return TRUE;
+	if (str.type == nullptr) return TRUE;
+	if (str.level < 1) return TRUE;
+	if (str.path == nullptr) return TRUE;
+
+	return FALSE;
+}
+
 errno_t MY_FILES::FILE_TREE::initTreeCach()
 {
 	//1. iterate through all items of the tree.
@@ -49,6 +59,13 @@ std::vector<MY_FILES::FILE_TREE_STRUCT*>* MY_FILES::FILE_TREE::getTreeIitemsByLe
 	std::cout << "at line: " << __LINE__ << std::endl;
 	return nullptr;
 }
+
+MY_FILES::FILE_TREE_STRUCT& MY_FILES::FILE_TREE::operator[](size_t index)
+{
+
+	return this->tree[index];
+}
+
 
 errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
 {

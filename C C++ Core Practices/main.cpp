@@ -26,6 +26,7 @@ int main()
     treeItem2.path = L"C:\\dir";
 
     _fileTree.addTreeItem(treeItem);
+    if (_fileTree[0] != nullptr) { std::wcout << _fileTree[12].name << std::endl; }
     _fileTree.addTreeItem(treeItem2);
 
     _fileTree.addTreeItem(treeItem);
