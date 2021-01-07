@@ -17,6 +17,7 @@ int main()
     treeItem.type = "file";
     treeItem.path = L"C:\\dir";
 
+
     MY_FILES::FILE_TREE_STRUCT treeItem2 = { 0 };
     treeItem2.name = L"def.txt";
     treeItem2.level = 2;
@@ -29,6 +30,13 @@ int main()
 
     _fileTree.addTreeItem(treeItem);
     _fileTree.addTreeItem(treeItem2);
+
+    treeItem.name = L"ghi.txt";
+    treeItem.level = 1;
+    treeItem.parentName = nullptr;
+    treeItem.type = "file";
+    treeItem.path = L"C:\\dir";
+    _fileTree.addTreeItem(treeItem);
     
     LOG_ANY(
         _fileTree.print();
@@ -40,7 +48,16 @@ int main()
     );
 
 
-    _fileTree.getTreeIitemsByLevel(4);
+    std::vector<MY_FILES::FILE_TREE_STRUCT*>& items = *_fileTree.getTreeIitemsByLevel(2);
+    
+    LOG("\nprinting the found values...");
+    for (size_t i = 0; i < items.size(); i++)
+    {
+        MY_FILES::FILE_TREE_STRUCT* a = items[i];
+        std::wcout << a->name;
+        std::cout << "\taddress: " << a << std::endl;
+    }
+
 
     /*int a = 10;
     int* i = nullptr;
