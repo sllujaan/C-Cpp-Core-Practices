@@ -18,10 +18,15 @@ namespace MY_FILES {
 		size_t level;
 		LPCSTR type;
 		LPCWSTR path;
+
+		operator bool();
+		BOOL operator == (std::nullptr_t nullStruct);
+		BOOL operator != (std::nullptr_t nullStruct);
 	};
 
-	BOOL operator == (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);
-	BOOL operator != (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);
+	
+	/*BOOL operator == (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);
+	BOOL operator != (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);*/
 
 	class FILE_TREE {
 	private:
@@ -45,9 +50,8 @@ namespace MY_FILES {
 		errno_t initTreeCach();
 		std::vector<FILE_TREE_STRUCT*>* getTreeIitemsByLevel(size_t level);
 
-		FILE_TREE_STRUCT& operator[] (size_t);
-		friend BOOL operator != (FILE_TREE_STRUCT&, std::nullptr_t nullStruct);
-
+		FILE_TREE_STRUCT* operator[] (size_t);
+		
 		void print();
 		void printCashed();
 

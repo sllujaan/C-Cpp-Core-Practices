@@ -1,25 +1,25 @@
 #include "File.h"
 
 
-BOOL MY_FILES::operator == (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct) {
-	if (str.name == nullptr) return TRUE;
-	if (str.type == nullptr) return TRUE;
-	if (str.level < 1) return TRUE;
-	if (str.path == nullptr) return TRUE;
-
-	return FALSE;
-
-}
-
-BOOL MY_FILES::operator != (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct)
-{
-	if (str.name == nullptr) return TRUE;
-	if (str.type == nullptr) return TRUE;
-	if (str.level < 1) return TRUE;
-	if (str.path == nullptr) return TRUE;
-
-	return FALSE;
-}
+//BOOL MY_FILES::operator == (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct) {
+//	if (str.name == nullptr) return TRUE;
+//	if (str.type == nullptr) return TRUE;
+//	if (str.level < 1) return TRUE;
+//	if (str.path == nullptr) return TRUE;
+//
+//	return FALSE;
+//
+//}
+//
+//BOOL MY_FILES::operator != (FILE_TREE_STRUCT& str, std::nullptr_t nullStruct)
+//{
+//	if (str.name == nullptr) return FALSE;
+//	if (str.type == nullptr) return FALSE;
+//	if (str.level < 1) return FALSE;
+//	if (str.path == nullptr) return FALSE;
+//
+//	return TRUE;
+//}
 
 errno_t MY_FILES::FILE_TREE::initTreeCach()
 {
@@ -60,10 +60,10 @@ std::vector<MY_FILES::FILE_TREE_STRUCT*>* MY_FILES::FILE_TREE::getTreeIitemsByLe
 	return nullptr;
 }
 
-MY_FILES::FILE_TREE_STRUCT& MY_FILES::FILE_TREE::operator[](size_t index)
+MY_FILES::FILE_TREE_STRUCT* MY_FILES::FILE_TREE::operator[](size_t index)
 {
-
-	return this->tree[index];
+	if(index >= this->tree.size()) return nullptr;
+	return &this->tree[index];
 }
 
 
@@ -149,7 +149,7 @@ MY_FILES::FILE_TREE::FILE_TREE()
 
 errno_t MY_FILES::FILE_TREE::addTreeItem(FILE_TREE_STRUCT treeItem)
 {
-	if(treeItem == NULL) {
+	if(treeItem == nullptr) {
 		std::cout << "treeItem was invalid or NULL" << std::endl;
 		return TASK_FAILURE;
 	}
@@ -184,4 +184,19 @@ void MY_FILES::FILE_TREE::printCashed()
 		/*std::wcout << this->treeCached[i].tree[0]->level << "\t";
 		std::cout << "structure address:\t" << this->treeCached[i].tree[0] << std::endl;*/
 	}
+}
+
+MY_FILES::FILE_TREE_STRUCT::operator bool()
+{
+	return false;
+}
+
+BOOL MY_FILES::FILE_TREE_STRUCT::operator==(std::nullptr_t nullStruct)
+{
+	if (this->name == nullptr) return true;
+	if (this->type == nullptr) return true;
+	if (this->level < 1) return true;
+	if (this->path == nullptr) return true;
+
+	return false;
 }
