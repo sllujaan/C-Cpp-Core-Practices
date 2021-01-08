@@ -77,5 +77,8 @@
     <ClInclude Include="Sal_Annotations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Concatenate_MACRO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@
 #include"Log.h"
 #include"File/File.h"
 
+#define CAT_NAME(X, Y) #X" "#Y 
+
 
 int main()
 {
@@ -50,26 +52,20 @@ int main()
     );
 
 
-    std::vector<MY_FILES::FILE_TREE_STRUCT*>& items = *_fileTree.getTreeIitemsByLevel(2);
+    std::vector<MY_FILES::FILE_TREE_STRUCT*>* items = _fileTree.getTreeIitemsByLevel(5);
     
+    if (items == nullptr) goto END;
     LOG("\nprinting the found values...");
-    for (size_t i = 0; i < items.size(); i++)
+    for (size_t i = 0; i < items->size(); i++)
     {
-        MY_FILES::FILE_TREE_STRUCT* a = items[i];
+        MY_FILES::FILE_TREE_STRUCT* a = items[0][i];
         std::wcout << a->name;
         std::cout << "\taddress: " << a << std::endl;
     }
 
 
-    /*int a = 10;
-    int* i = nullptr;
-    int& j = *i;
 
-    std::cout << &j << std::endl;
-    if (&j == nullptr) {
-        LOG("j is null");
-    }*/
-
+END:
 
     LOG("----Finished----");
     std::cin.get();

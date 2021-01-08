@@ -152,6 +152,7 @@
     <ClCompile Include="Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Concatenate_MACRO.h" />
     <ClInclude Include="Deprecated.h" />
     <ClInclude Include="directory.h" />
     <ClInclude Include="File\File.h" />
