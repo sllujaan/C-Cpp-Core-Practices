@@ -5,46 +5,48 @@
 #include"Log.h"
 #include"File/File.h"
 
-#define CAT_NAME(X, Y) #X" "#Y 
+#define CAT_NAME(X, Y) #X" "#Y
 
+void varidadicFunc(const char* fmt...) {
+    va_list args;
+    va_start(args, fmt);
+
+    std::wcout << va_arg(args, wchar_t*) << std::endl;
+    std::cout << va_arg(args, int) << std::endl;
+    std::cout << va_arg(args, float) << std::endl;
+    std::cout << va_arg(args, char*) << std::endl;
+    std::wcout << va_arg(args, wchar_t*) << std::endl;
+}
 
 int main()
 {
+
+    LPCWSTR NAMES[] = { L"abc.txt", L"abc1.txt",  L"abc2.txt",
+                L"abc3.txt",  L"abc4.txt",  L"abc5.txt",  L"abc6.txt",
+                L"abc7.txt",  L"abc8.txt",  L"abc9.txt", };
     
     MY_FILES::FILE_TREE _fileTree;
     MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
-    treeItem.name = L"abc.txt";
-    treeItem.level = 1;
-    treeItem.parentName = nullptr;
-    treeItem.type = "file";
-    treeItem.path = L"C:\\dir";
+    
+    for (size_t i = 0; i < ARRAYSIZE(NAMES); i++)
+    {
+        treeItem.name = NAMES[i];
+        treeItem.level = 1;
+        treeItem.parentName = nullptr;
+        treeItem.type = "file";
+        treeItem.path = L"C:\\dir";
+        _fileTree.addTreeItem(treeItem);
+    }
 
-
-    MY_FILES::FILE_TREE_STRUCT treeItem2 = { 0 };
-    treeItem2.name = L"def.txt";
-    treeItem2.level = 2;
-    treeItem2.parentName = nullptr;
-    treeItem2.type = "dir";
-    treeItem2.path = L"C:\\dir";
-
-    _fileTree.addTreeItem(treeItem);
     //if(_fileTree[0]) { std::wcout << _fileTree[0]->name << std::endl; }
     if (_fileTree[0] != nullptr) { std::wcout << _fileTree[0]->name << std::endl; }
-    _fileTree.addTreeItem(treeItem2);
 
-    _fileTree.addTreeItem(treeItem);
-    _fileTree.addTreeItem(treeItem2);
-
-    treeItem.name = L"ghi.txt";
-    treeItem.level = 1;
-    treeItem.parentName = nullptr;
-    treeItem.type = "file";
-    treeItem.path = L"C:\\dir";
     _fileTree.addTreeItem(treeItem);
     
     LOG_ANY(
         _fileTree.print();
     );
+
     _fileTree.initTreeCach();
     
     LOG_ANY(
@@ -52,7 +54,7 @@ int main()
     );
 
 
-    std::vector<MY_FILES::FILE_TREE_STRUCT*>* items = _fileTree.getTreeIitemsByLevel(5);
+    std::vector<MY_FILES::FILE_TREE_STRUCT*>* items = _fileTree.getTreeIitemsByLevel(1);
     
     if (items == nullptr) goto END;
     LOG("\nprinting the found values...");
@@ -61,12 +63,17 @@ int main()
         MY_FILES::FILE_TREE_STRUCT* a = items[0][i];
         std::wcout << a->name;
         std::cout << "\taddress: " << a << std::endl;
+        
     }
 
-
+    if (_fileTree[1] == items[0][0]) {
+        std::cout << "_fileTree[0] == items[0][0]" << std::endl;
+    }
 
 END:
 
+    varidadicFunc("ab", L"abc", 1, 2.1, "abc", L"abc");
+    //std::cout << __FUNCSIG__ << std::endl;
     LOG("----Finished----");
     std::cin.get();
 }

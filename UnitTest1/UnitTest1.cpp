@@ -46,16 +46,21 @@ namespace UnitTest1
 			}
 			_fileTree.initTreeCach();
 			
-			std::vector<MY_FILES::FILE_TREE_STRUCT*>* items = _fileTree.getTreeIitemsByLevel(5);
-			if (items == nullptr) return;
-			
-			for (size_t i = 0; i < items->size(); i++)
-			{
-				MY_FILES::FILE_TREE_STRUCT* a = items[0][i];
-				std::wcout << a->name;
-				std::cout << "\taddress: " << a << std::endl;
-			}
-			//Assert::AreEqual(treeItem.name, _fileTree[0]->name);
+			std::vector<MY_FILES::FILE_TREE_STRUCT*>* cachedItems = _fileTree.getTreeIitemsByLevel(5);
+			if (cachedItems == nullptr) return;
+
+
+			Assert::IsTrue(_fileTree[0] == cachedItems[0][0]);
+			Assert::IsTrue((_fileTree[1] == cachedItems[0][0]));
+			Assert::IsTrue(_fileTree[2] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[3] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[4] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[5] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[6] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[7] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[8] == cachedItems[0][0]);
+			Assert::IsTrue(_fileTree[8] == cachedItems[0][0]);
+
 		}
 
 	};
