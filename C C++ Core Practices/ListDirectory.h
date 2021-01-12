@@ -11,6 +11,19 @@
 
 #define NOT_DIR(X) (strcmp(X, ".") == 0) || (strcmp(X, "..") == 0)
 
+template<typename T = WCHAR, size_t size>
+BOOL isArrayEmpty(T (&arr)[size], LPCWSTR wstr) {
+
+	std::cout << size << std::endl;
+	std::cout << wcsnlen_s(wstr, _MAX_DIR) << std::endl;
+
+	/*for (size_t i = 0; i < size; i++)
+	{
+		if(arr[i] != wstr[])
+	}*/
+	return TRUE;
+}
+
 
 const wchar_t* getWC(const char* c) {
 	size_t cSize = strlen(c) + 1;
@@ -379,6 +392,25 @@ int initListDirToTree() {
 	readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples", _fileTree);
 
 	_fileTree.print();
+
+	const size_t nDrive = 4;
+	WCHAR drive[nDrive];
+	WCHAR dir[_MAX_FNAME];
+	WCHAR file[_MAX_FNAME];
+	WCHAR ext[_MAX_EXT];
+
+	
+
+	_wsplitpath_s(L"C:", drive, dir, file, ext);
+
+	std::wcout << drive << std::endl;
+	std::wcout << dir << std::endl;
+	std::wcout << file << std::endl;
+	std::wcout << ext << std::endl;
+
+	//isArrayEmpty(file, L"abc");
+
+	std::cout << isArrayEmpty(file, L"abc");
 
 	return 0;
 
