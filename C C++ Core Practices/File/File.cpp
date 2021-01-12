@@ -162,11 +162,14 @@ errno_t MY_FILES::FILE_TREE::addTreeItem(FILE_TREE_STRUCT treeItem)
 
 void MY_FILES::FILE_TREE::print()
 {
+	if (this->tree.size() > 0) std::cout << "\nprinting tree.........." << std::endl;
 	for (int i = 0; i < this->tree.size(); i++) {
-		std::wcout << this->tree[i].name << "\t";
-		std::wcout<< this->tree[i].type << "\t";
-		std::cout << this->tree[i].level << "\t";
-		std::cout << "structure address:\t" << &this->tree[i] << std::endl;
+		std::wcout << this->tree[i].name << "\n";
+		std::wcout<< this->tree[i].type << "\n";
+		std::cout << this->tree[i].level << "\n";
+		std::wcout << this->tree[i].path << "\n";
+		std::cout <<"------------"<< std::endl;
+		LOG_ANY(std::cout << "structure address:\t" << &this->tree[i] << std::endl);
 	}
 }
 

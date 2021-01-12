@@ -17,7 +17,7 @@
 int main()
 {
 
-    initListDir();
+    initListDirToTree();
 
 #ifdef FTSPTR_USE
 

@@ -12,6 +12,14 @@
 #define NOT_DIR(X) (strcmp(X, ".") == 0) || (strcmp(X, "..") == 0)
 
 
+const wchar_t* getWC(const char* c) {
+	size_t cSize = strlen(c) + 1;
+	wchar_t* wc = new wchar_t[cSize];
+	mbstowcs_s(&cSize, wc, cSize, c, cSize);
+	return wc;
+}
+
+
 int readDir(const char* path, unsigned int level = 1) {
 	std::string newPath = path;
 	newPath += +"\\*";
@@ -253,7 +261,7 @@ errno_t ReadDirChangeInfo(LPCSTR filePath) {
 }
 
 
-int readDirToTree(const char* path, MY_FILES::FILE_TREE*, unsigned int level = 1) {
+int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int level = 1) {
 	std::string newPath = path;
 	newPath += +"\\*";
 
@@ -297,15 +305,26 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE*, unsigned int level = 1
 				LOG("Not Directory");
 			}
 			else {
+
 				newPath = path;
 				LOG("---------------");
 				LOG(level);
-
+				const wchar_t* a = getWC(path);
+				//create tree items object-----------------
+				MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
+				treeItem.name = getWC(ffd.cFileName);
+				treeItem.level = level;
+				treeItem.parentName = nullptr;
+				treeItem.type = "dir";
+				treeItem.path = getWC(path);
+				tree.addTreeItem(treeItem);
+				//-------------------------------------
 				newPath.append("\\");
 				newPath.append(ffd.cFileName);
 				LOG(newPath);
 				LOG("---------------");
-				readDir(newPath.c_str(), level + 1);
+				//readDir(newPath.c_str(), level + 1);
+				readDirToTree(newPath.c_str(), tree, level + 1);
 			}
 
 		}
@@ -317,6 +336,17 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE*, unsigned int level = 1
 			LOG("_____________");
 			LOG(level);
 			LOG(path);
+
+			//create tree items object-----------------
+			MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
+			treeItem.name = getWC(ffd.cFileName);
+			treeItem.level = level;
+			treeItem.parentName = nullptr;
+			treeItem.type = "file";
+			treeItem.path = getWC(path);
+			tree.addTreeItem(treeItem);
+			//-------------------------------------
+
 			_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
 			LOG("_____________");
 		}
@@ -337,6 +367,18 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE*, unsigned int level = 1
 int initListDir() {
 
 	readDir("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples");
+
+	return 0;
+
+}
+
+int initListDirToTree() {
+
+	MY_FILES::FILE_TREE _fileTree;
+
+	readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples", _fileTree);
+
+	_fileTree.print();
 
 	return 0;
 
