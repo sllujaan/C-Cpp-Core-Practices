@@ -44,7 +44,7 @@ namespace UnitTest1
 				_fileTree.addTreeItem(treeItem);
 				//Assert::AreEqual(treeItem.name, _fileTree[i]->name);
 			}
-			_fileTree.initTreeCach();
+			_fileTree.initTreeCach(); 
 			
 			std::vector<MY_FILES::FILE_TREE_STRUCT*>* cachedItems = _fileTree.getTreeIitemsByLevel(1);
 			if (cachedItems == nullptr) {

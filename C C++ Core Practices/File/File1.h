@@ -1,11 +1,16 @@
 #pragma once
-#include"pch.h"
+#include <windows.h>
+#include<iostream>
+#include<vector>
+
+
 #include"../Log.h"
 
 
-#define FTSPTR std::vector<MY_FILES::FILE_TREE_STRUCT*>*
 
-namespace  MY_FILES {
+
+
+namespace MY_FILES {
 
 	struct FILE_TREE_STRUCT {
 		LPCWSTR name;
@@ -14,16 +19,16 @@ namespace  MY_FILES {
 		LPCSTR type;
 		LPCWSTR path;
 
-		 operator bool();
-		 BOOL operator == (std::nullptr_t nullStruct);
-		 BOOL operator != (std::nullptr_t nullStruct);
+		operator bool();
+		BOOL operator == (std::nullptr_t nullStruct);
+		BOOL operator != (std::nullptr_t nullStruct);
 	};
 
 	
 	/*BOOL operator == (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);
 	BOOL operator != (FILE_TREE_STRUCT& str1, std::nullptr_t nullStruct);*/
 
-	class  FILE_TREE {
+	class FILE_TREE {
 	private:
 		std::vector<FILE_TREE_STRUCT> tree;
 		//structure for caching tree items into specific levels for better retrieval or data
@@ -43,7 +48,7 @@ namespace  MY_FILES {
 		errno_t addTreeItem(FILE_TREE_STRUCT treeItem);
 		//init cache
 		errno_t initTreeCach();
-		FTSPTR getTreeIitemsByLevel(size_t level);
+		std::vector<FILE_TREE_STRUCT*>* getTreeIitemsByLevel(size_t level);
 
 		FILE_TREE_STRUCT* operator[] (size_t);
 		

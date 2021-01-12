@@ -6,12 +6,13 @@
 #include <stdio.h>
 #include <strsafe.h>
 
+#include"File/File.h"
 #include"Log.h"
 
 #define NOT_DIR(X) (strcmp(X, ".") == 0) || (strcmp(X, "..") == 0)
 
 
-int readDir(const char* path) {
+int readDir(const char* path, unsigned int level = 1) {
 	std::string newPath = path;
 	newPath += +"\\*";
 
@@ -56,10 +57,14 @@ int readDir(const char* path) {
 			}
 			else {
 				newPath = path;
+				LOG("---------------");
+				LOG(level);
+				
 				newPath.append("\\");
 				newPath.append(ffd.cFileName);
 				LOG(newPath);
-				readDir(newPath.c_str());
+				LOG("---------------");
+				readDir(newPath.c_str(), level+1);
 			}
 
 		}
@@ -68,9 +73,11 @@ int readDir(const char* path) {
 
 			filesize.LowPart = ffd.nFileSizeLow;
 			filesize.HighPart = ffd.nFileSizeHigh;
-			
+			LOG("_____________");
+			LOG(level);
 			LOG(path);
 			_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
+			LOG("_____________");
 		}
 	} while (FindNextFile(hFind, &ffd) != 0);
 
@@ -246,9 +253,79 @@ errno_t ReadDirChangeInfo(LPCSTR filePath) {
 }
 
 
+int readDirToTree(const char* path, MY_FILES::FILE_TREE*, unsigned int level = 1) {
+	std::string newPath = path;
+	newPath += +"\\*";
+
+	//newPath.c_str();
+	/*newPath.c_str();
+	char arr[3];
+	const char* cPtr = "ab";
+	strcpy_s<3>(arr, cPtr);*/
 
 
 
+	WIN32_FIND_DATA ffd;
+	LARGE_INTEGER filesize;
+	TCHAR szDir[MAX_PATH];
+	strcpy_s<MAX_PATH>(szDir, newPath.c_str());
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+
+
+
+	// Find the first file in the directory.
+	hFind = FindFirstFile(szDir, &ffd);
+
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		std::cout << "FindFirstFile failed" << std::endl;
+		return 1;
+	}
+
+
+	// List all the files in the directory with some info about them.
+
+
+	do
+	{
+		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			LOG_ANY(_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName));
+			//_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
+
+			if (NOT_DIR(ffd.cFileName)) {
+				LOG("Not Directory");
+			}
+			else {
+				newPath = path;
+				LOG("---------------");
+				LOG(level);
+
+				newPath.append("\\");
+				newPath.append(ffd.cFileName);
+				LOG(newPath);
+				LOG("---------------");
+				readDir(newPath.c_str(), level + 1);
+			}
+
+		}
+		else
+		{
+
+			filesize.LowPart = ffd.nFileSizeLow;
+			filesize.HighPart = ffd.nFileSizeHigh;
+			LOG("_____________");
+			LOG(level);
+			LOG(path);
+			_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
+			LOG("_____________");
+		}
+	} while (FindNextFile(hFind, &ffd) != 0);
+
+
+
+	return 0;
+}
 
 
 

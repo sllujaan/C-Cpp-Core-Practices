@@ -1,25 +1,25 @@
 // C C++ Core Practices.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include<iostream>
+#include"pch.h"
+
 #include"Log.h"
 #include"File/File.h"
+#include"ListDirectory.h"
 
 #define CAT_NAME(X, Y) #X" "#Y
 
-void varidadicFunc(const char* fmt...) {
-    va_list args;
-    va_start(args, fmt);
 
-    std::wcout << va_arg(args, wchar_t*) << std::endl;
-    std::cout << va_arg(args, int) << std::endl;
-    std::cout << va_arg(args, float) << std::endl;
-    std::cout << va_arg(args, char*) << std::endl;
-    std::wcout << va_arg(args, wchar_t*) << std::endl;
-}
+
+
+
 
 int main()
 {
+
+    initListDir();
+
+#ifdef FTSPTR_USE
 
     LPCWSTR NAMES[] = { L"abc.txt", L"abc1.txt",  L"abc2.txt",
                 L"abc3.txt",  L"abc4.txt",  L"abc5.txt",  L"abc6.txt",
@@ -54,7 +54,7 @@ int main()
     );
 
 
-    std::vector<MY_FILES::FILE_TREE_STRUCT*>* items = _fileTree.getTreeIitemsByLevel(1);
+    FTSPTR items = _fileTree.getTreeIitemsByLevel(1);
     
     if (items == nullptr) goto END;
     LOG("\nprinting the found values...");
@@ -72,10 +72,12 @@ int main()
 
 END:
 
-    varidadicFunc("ab", L"abc", 1, 2.1, "abc", L"abc");
+
     //std::cout << __FUNCSIG__ << std::endl;
+#endif
     LOG("----Finished----");
     std::cin.get();
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "File.h"
 
 
@@ -39,7 +40,7 @@ errno_t MY_FILES::FILE_TREE::initTreeCach()
 	return TASK_SUCCESS;
 }
 
-std::vector<MY_FILES::FILE_TREE_STRUCT*>* MY_FILES::FILE_TREE::getTreeIitemsByLevel(size_t level)
+FTSPTR MY_FILES::FILE_TREE::getTreeIitemsByLevel(size_t level)
 {
 	if (this->treeCached.size() == 0) {
 		std::cout << "cached tree in empty in: " << __FUNCTION__;
