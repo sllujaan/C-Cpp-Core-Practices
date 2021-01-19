@@ -168,6 +168,7 @@ void MY_FILES::FILE_TREE::print()
 		std::wcout<< this->tree[i].type << "\n";
 		std::cout << this->tree[i].level << "\n";
 		std::wcout << this->tree[i].path << "\n";
+		if (this->tree[i].level > 1) std::wcout << L"Parent Name here" << std::endl;
 		std::cout <<"------------"<< std::endl;
 		LOG_ANY(std::cout << "structure address:\t" << &this->tree[i] << std::endl);
 	}
