@@ -275,6 +275,8 @@ errno_t ReadDirChangeInfo(LPCSTR filePath) {
 	return 0;
 }
 
+errno_t getFileNameFromPath(LPCWSTR path, LPCWSTR* destination);
+
 
 int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int level = 1) {
 	std::string newPath = path;
@@ -332,6 +334,16 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int leve
 				treeItem.parentName = nullptr;
 				treeItem.type = "dir";
 				treeItem.path = getWC(path);
+				
+				//get parent directory name from path----
+				if (level > 1) {
+					LPCWSTR ParentDirName = nullptr;
+					errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
+					if (!err)
+						treeItem.parentName = ParentDirName;
+				}
+				//---------------------------------------
+
 				tree.addTreeItem(treeItem);
 				//-------------------------------------
 				newPath.append("\\");
@@ -359,6 +371,16 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int leve
 			treeItem.parentName = nullptr;
 			treeItem.type = "file";
 			treeItem.path = getWC(path);
+
+			//get parent directory name from path----
+			if (level > 1) {
+				LPCWSTR ParentDirName = nullptr;
+				errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
+				if (!err)
+					treeItem.parentName = ParentDirName;
+			}
+			//---------------------------------------
+
 			tree.addTreeItem(treeItem);
 			//-------------------------------------
 
@@ -384,7 +406,6 @@ size_t getArrayCount(WCHAR arr[]) {
 	int i = 0;
 	int count = 0;
 	while (arr[i] != L'\0') {
-		std::wcout << arr[i] << std::endl;
 		count++;
 		i++;
 	}
