@@ -3,8 +3,6 @@
 
 #include"pch.h"
 
-#include"Log.h"
-#include"File/File.h"
 #include"ListDirectory.h"
 
 #define CAT_NAME(X, Y) #X" "#Y

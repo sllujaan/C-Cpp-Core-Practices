@@ -27,12 +27,12 @@ BOOL isValidDirFileName(T (&arr)[size]) {
 }
 
 
-const wchar_t* getWC(const char* c) {
-	size_t cSize = strlen(c) + 1;
-	wchar_t* wc = new wchar_t[cSize];
-	mbstowcs_s(&cSize, wc, cSize, c, cSize);
-	return wc;
-}
+//const wchar_t* getWC(const char* c) {
+//	size_t cSize = strlen(c) + 1;
+//	wchar_t* wc = new wchar_t[cSize];
+//	mbstowcs_s(&cSize, wc, cSize, c, cSize);
+//	return wc;
+//}
 
 
 int readDir(const char* path, unsigned int level = 1) {
@@ -282,14 +282,6 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int leve
 	std::string newPath = path;
 	newPath += +"\\*";
 
-	//newPath.c_str();
-	/*newPath.c_str();
-	char arr[3];
-	const char* cPtr = "ab";
-	strcpy_s<3>(arr, cPtr);*/
-
-
-
 	WIN32_FIND_DATA ffd;
 	LARGE_INTEGER filesize;
 	TCHAR szDir[MAX_PATH];
@@ -467,40 +459,39 @@ int initListDirToTree() {
 
 	MY_FILES::FILE_TREE _fileTree;
 
-	readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples", _fileTree);
+	//readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples", _fileTree);
 
-	_fileTree.print();
+	//_fileTree.readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples");
 
-	const size_t nDrive = 4;
-	WCHAR drive[nDrive];
-	WCHAR dir[_MAX_FNAME];
-	WCHAR file[_MAX_FNAME];
-	WCHAR ext[_MAX_EXT];
+	//_fileTree.print();
 
-	
+	_fileTree.sample();
 
-	_wsplitpath_s(L"C:\\folder", drive, dir, file, ext);
+	_fileTree.initTreeCach();
+	//_fileTree.printCashed();
 
-	std::wcout << drive << std::endl;
-	std::wcout << dir << std::endl;
-	std::wcout << file << std::endl;
-	std::wcout << ext << std::endl;
+	//FTSPTR leveledStruct = _fileTree.getTreeIitemsByLevel(6);
 
-	if (ext[0] == L'\0') std::cout << "ext is null" << std::endl;
+	//std::vector<MY_FILES::FILE_TREE_STRUCT*>*;
 
-	//isArrayEmpty(file, L"abc");
+	int i = 1;
+	while (FTSPTR leveledStruct = _fileTree.getTreeIitemsByLevel(i)) {
+		std::cout << "level found: " << i << std::endl;
+		for (size_t j = 0; j < leveledStruct->size() ; j++)
+		{
+			//std::wcout << this->treeCached[i].tree[j]->name << std::endl;
+			std::wcout << "name:\t" << (*leveledStruct)[j]->name << std::endl;
+		}
+		i++;
+	}
 
-	LPCWSTR fileName = nullptr;
+
+	/*LPCWSTR fileName = nullptr;
 	errno_t err = getFileNameFromPath(L"", &fileName);
 
 	if(!err)
-		std::wcout << fileName << std::endl;
+		std::wcout << fileName << std::endl;*/
 
-	
-	//test(fileName);
-
-
-	std::cout << isValidDirFileName(file);
 
 
 	return 0;
