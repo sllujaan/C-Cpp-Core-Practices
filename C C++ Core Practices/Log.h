@@ -14,3 +14,5 @@
 #define TASK_FAILURE 1
 
 
+#define CAT_NAME(X, Y) #X" "#Y
+

@@ -43,7 +43,7 @@ namespace  MY_FILES {
 		std::vector<FILE_TREE_STRUCT_CACHED> treeCached;
 
 		//file tree
-		static MY_FILES::FILE_TREE _fileTree;
+		static FILE_TREE _fileTree;
 		
 		errno_t addTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
 		errno_t createPushTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
@@ -55,16 +55,12 @@ namespace  MY_FILES {
 		//init cache
 		errno_t initTreeCach();
 		FTSPTR getTreeIitemsByLevel(size_t level);
-		//errno_t readDirToTree(const char* path, MY_FILES::FILE_TREE& tree = _fileTree, unsigned int level = 1);
-
-		static void sample(static FILE_TREE& tree = FILE_TREE::_fileTree);
+		static errno_t readDirToTree(const char* path, MY_FILES::FILE_TREE& tree = FILE_TREE::_fileTree, unsigned int level = 1);
 
 		FILE_TREE_STRUCT* operator[] (size_t);
 
-
-		errno_t getFileNameFromPath(LPCWSTR path, LPCWSTR* destination);
-
-		size_t getArrayCount(WCHAR arr[]);
+		static errno_t getFileNameFromPath(LPCWSTR path, LPCWSTR* destination);
+		static size_t getArrayCount(WCHAR arr[]);
 		
 		void print();
 		void printCashed();

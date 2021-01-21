@@ -2,20 +2,15 @@
 //
 
 #include"pch.h"
-
-#include"ListDirectory.h"
-
-#define CAT_NAME(X, Y) #X" "#Y
-
-
-
+#include"Log.h"
+#include"Static.h"
 
 
 
 int main()
 {
 
-    initListDirToTree();
+    std::cout << 10 << std::endl;
 
 #ifdef FTSPTR_USE
 

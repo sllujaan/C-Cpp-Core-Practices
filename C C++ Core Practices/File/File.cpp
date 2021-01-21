@@ -62,7 +62,6 @@ FTSPTR MY_FILES::FILE_TREE::getTreeIitemsByLevel(size_t level)
 }
 
 
-#ifdef MYDEBUG
 
 errno_t MY_FILES::FILE_TREE::readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int level)
 {
@@ -173,18 +172,13 @@ errno_t MY_FILES::FILE_TREE::readDirToTree(const char* path, MY_FILES::FILE_TREE
 	return 0;
 }
 
-#endif
-
 MY_FILES::FILE_TREE_STRUCT* MY_FILES::FILE_TREE::operator[](size_t index)
 {
 	if(index >= this->tree.size()) return nullptr;
 	return &this->tree[index];
 }
 
-void MY_FILES::FILE_TREE::sample(FILE_TREE& tree)
-{
 
-}
 
 
 errno_t MY_FILES::FILE_TREE::addTreeCach(size_t level, FILE_TREE_STRUCT& _tree)
@@ -299,14 +293,14 @@ errno_t MY_FILES::FILE_TREE::getFileNameFromPath(LPCWSTR path, LPCWSTR* destinat
 
 
 	if (file[0] != L'\0') {
-		size_t size = this->getArrayCount(file);
+		size_t size = FILE_TREE::getArrayCount(file);
 		WCHAR* newFile = new WCHAR[size] + 1;
 		wcscpy_s(newFile, size + 1, file);
 		*destination = newFile;
 		return TASK_SUCCESS;
 	}
 
-	size_t size = this->getArrayCount(drive);
+	size_t size = FILE_TREE::getArrayCount(drive);
 	WCHAR* newDrive = new WCHAR[size] + 1;
 	wcscpy_s(newDrive, size + 1, drive);
 	*destination = newDrive;
@@ -382,4 +376,4 @@ const wchar_t* getWC(const char* c) {
 
 
 //static members definition
-static MY_FILES::FILE_TREE _fileTree = { };
+MY_FILES::FILE_TREE _fileTree = { };

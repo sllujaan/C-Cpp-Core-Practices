@@ -461,11 +461,9 @@ int initListDirToTree() {
 
 	//readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples", _fileTree);
 
-	//_fileTree.readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples");
+	_fileTree.readDirToTree("C:\\Users\\SALMAN-ALTAF\\Desktop\\samples");
 
 	//_fileTree.print();
-
-	_fileTree.sample();
 
 	_fileTree.initTreeCach();
 	//_fileTree.printCashed();

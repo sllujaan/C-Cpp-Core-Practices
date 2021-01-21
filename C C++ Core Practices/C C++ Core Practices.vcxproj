@@ -184,6 +184,7 @@
     <ClInclude Include="predefined_macros.h" />
     <ClInclude Include="Sal_Annotations.h" />
     <ClInclude Include="Static.h" />
+    <ClInclude Include="test.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="TypeDefinition.h" />
     <ClInclude Include="Variadic.h" />
