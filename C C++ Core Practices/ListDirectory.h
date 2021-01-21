@@ -278,6 +278,39 @@ errno_t ReadDirChangeInfo(LPCSTR filePath) {
 errno_t getFileNameFromPath(LPCWSTR path, LPCWSTR* destination);
 
 
+MY_FILES::FILE_TREE_STRUCT createTreeStruct(
+	std::string& newPath,
+	const char* path,
+	WIN32_FIND_DATA& ffd,
+	size_t level,
+	LPCSTR fileType
+
+) {
+	newPath = path;
+	LOG("---------------");
+	LOG(level);
+	const wchar_t* a = getWC(path);
+	//create tree items object-----------------
+	MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
+	treeItem.name = getWC(ffd.cFileName);
+	treeItem.level = level;
+	treeItem.parentName = nullptr;
+	treeItem.type = fileType;
+	treeItem.path = getWC(path);
+
+	//get parent directory name from path----
+	if (level > 1) {
+		LPCWSTR ParentDirName = nullptr;
+		errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
+		if (!err)
+			treeItem.parentName = ParentDirName;
+	}
+	//---------------------------------------
+
+	return treeItem;
+}
+
+
 int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int level = 1) {
 	std::string newPath = path;
 	newPath += +"\\*";
@@ -315,26 +348,7 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int leve
 			}
 			else {
 
-				newPath = path;
-				LOG("---------------");
-				LOG(level);
-				const wchar_t* a = getWC(path);
-				//create tree items object-----------------
-				MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
-				treeItem.name = getWC(ffd.cFileName);
-				treeItem.level = level;
-				treeItem.parentName = nullptr;
-				treeItem.type = "dir";
-				treeItem.path = getWC(path);
-				
-				//get parent directory name from path----
-				if (level > 1) {
-					LPCWSTR ParentDirName = nullptr;
-					errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
-					if (!err)
-						treeItem.parentName = ParentDirName;
-				}
-				//---------------------------------------
+				MY_FILES::FILE_TREE_STRUCT treeItem = createTreeStruct(newPath, path, ffd, level, "dir");
 
 				tree.addTreeItem(treeItem);
 				//-------------------------------------
@@ -356,22 +370,7 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int leve
 			LOG(level);
 			LOG(path);
 
-			//create tree items object-----------------
-			MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
-			treeItem.name = getWC(ffd.cFileName);
-			treeItem.level = level;
-			treeItem.parentName = nullptr;
-			treeItem.type = "file";
-			treeItem.path = getWC(path);
-
-			//get parent directory name from path----
-			if (level > 1) {
-				LPCWSTR ParentDirName = nullptr;
-				errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
-				if (!err)
-					treeItem.parentName = ParentDirName;
-			}
-			//---------------------------------------
+			MY_FILES::FILE_TREE_STRUCT treeItem = createTreeStruct(newPath, path, ffd, level, "file");
 
 			tree.addTreeItem(treeItem);
 			//-------------------------------------
@@ -385,6 +384,9 @@ int readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int leve
 
 	return 0;
 }
+
+
+
 
 void test(LPCWSTR path) {
 	if (path == nullptr) {
@@ -489,6 +491,7 @@ int initListDirToTree() {
 
 	if(!err)
 		std::wcout << fileName << std::endl;*/
+
 
 
 

@@ -3,14 +3,14 @@
 
 #include"pch.h"
 #include"Log.h"
-#include"Static.h"
+#include"ListDirectory.h"
 
 
 
 int main()
 {
+    initListDirToTree();
 
-    std::cout << 10 << std::endl;
 
 #ifdef FTSPTR_USE
 

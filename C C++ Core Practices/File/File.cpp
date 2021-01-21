@@ -63,119 +63,92 @@ FTSPTR MY_FILES::FILE_TREE::getTreeIitemsByLevel(size_t level)
 
 
 
-errno_t MY_FILES::FILE_TREE::readDirToTree(const char* path, MY_FILES::FILE_TREE& tree, unsigned int level)
-{
-	std::string newPath = path;
-	newPath += +"\\*";
-
-	WIN32_FIND_DATA ffd;
-	LARGE_INTEGER filesize;
-	TCHAR szDir[MAX_PATH];
-	strcpy_s<MAX_PATH>(szDir, newPath.c_str());
-	HANDLE hFind = INVALID_HANDLE_VALUE;
-
-
-
-	// Find the first file in the directory.
-	hFind = FindFirstFile(szDir, &ffd);
-
-	if (hFind == INVALID_HANDLE_VALUE)
-	{
-		std::cout << "FindFirstFile failed" << std::endl;
-		return 1;
-	}
-
-
-	// List all the files in the directory with some info about them.
-
-
-	do
-	{
-		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-		{
-			LOG_ANY(_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName));
-			//_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
-
-			if (NOT_DIR(ffd.cFileName)) {
-				LOG("Not Directory");
-			}
-			else {
-
-				newPath = path;
-				LOG("---------------");
-				LOG(level);
-				const wchar_t* a = getWC(path);
-				//create tree items object-----------------
-				MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
-				treeItem.name = getWC(ffd.cFileName);
-				treeItem.level = level;
-				treeItem.parentName = nullptr;
-				treeItem.type = "dir";
-				treeItem.path = getWC(path);
-
-				//get parent directory name from path----
-				if (level > 1) {
-					LPCWSTR ParentDirName = nullptr;
-					errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
-					if (!err)
-						treeItem.parentName = ParentDirName;
-				}
-				//---------------------------------------
-
-				tree.addTreeItem(treeItem);
-				//-------------------------------------
-				newPath.append("\\");
-				newPath.append(ffd.cFileName);
-				LOG(newPath);
-				LOG("---------------");
-				//readDir(newPath.c_str(), level + 1);
-				readDirToTree(newPath.c_str(), tree, level + 1);
-			}
-
-		}
-		else
-		{
-
-			filesize.LowPart = ffd.nFileSizeLow;
-			filesize.HighPart = ffd.nFileSizeHigh;
-			LOG("_____________");
-			LOG(level);
-			LOG(path);
-
-			//create tree items object-----------------
-			MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
-			treeItem.name = getWC(ffd.cFileName);
-			treeItem.level = level;
-			treeItem.parentName = nullptr;
-			treeItem.type = "file";
-			treeItem.path = getWC(path);
-
-			//get parent directory name from path----
-			if (level > 1) {
-				LPCWSTR ParentDirName = nullptr;
-				errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
-				if (!err)
-					treeItem.parentName = ParentDirName;
-			}
-			//---------------------------------------
-
-			tree.addTreeItem(treeItem);
-			//-------------------------------------
-
-			_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
-			LOG("_____________");
-		}
-	} while (FindNextFile(hFind, &ffd) != 0);
-
-
-
-	return 0;
-}
 
 MY_FILES::FILE_TREE_STRUCT* MY_FILES::FILE_TREE::operator[](size_t index)
 {
 	if(index >= this->tree.size()) return nullptr;
 	return &this->tree[index];
+}
+
+
+errno_t MY_FILES::FILE_TREE::readDirToTree(const char* path, unsigned int level)
+{
+	//instanciate the class object itself
+	if (this->_fileTree == nullptr) {
+		this->_fileTree = new FILE_TREE();
+	}
+
+	//std::string newPath = path;
+	//newPath += +"\\*";
+
+	//WIN32_FIND_DATA ffd;
+	//LARGE_INTEGER filesize;
+	//TCHAR szDir[MAX_PATH];
+	//strcpy_s<MAX_PATH>(szDir, newPath.c_str());
+	//HANDLE hFind = INVALID_HANDLE_VALUE;
+
+
+
+	//// Find the first file in the directory.
+	//hFind = FindFirstFile(szDir, &ffd);
+
+	//if (hFind == INVALID_HANDLE_VALUE)
+	//{
+	//	std::cout << "FindFirstFile failed" << std::endl;
+	//	return 1;
+	//}
+
+
+	//// List all the files in the directory with some info about them.
+
+
+	//do
+	//{
+	//	if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+	//	{
+	//		LOG_ANY(_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName));
+	//		//_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
+
+	//		if (NOT_DIR(ffd.cFileName)) {
+	//			LOG("Not Directory");
+	//		}
+	//		else {
+
+	//			MY_FILES::FILE_TREE_STRUCT treeItem = this->createTreeStruct(newPath, path, ffd, level, "dir");
+
+	//			this->_fileTree->addTreeItem(treeItem);
+	//			//-------------------------------------
+	//			newPath.append("\\");
+	//			newPath.append(ffd.cFileName);
+	//			LOG(newPath);
+	//			LOG("---------------");
+	//			//readDir(newPath.c_str(), level + 1);
+	//			readDirToTree(newPath.c_str(), level + 1);
+	//		}
+
+	//	}
+	//	else
+	//	{
+
+	//		filesize.LowPart = ffd.nFileSizeLow;
+	//		filesize.HighPart = ffd.nFileSizeHigh;
+	//		LOG("_____________");
+	//		LOG(level);
+	//		LOG(path);
+
+	//		MY_FILES::FILE_TREE_STRUCT treeItem = this->createTreeStruct(newPath, path, ffd, level, "file");
+
+	//		this->_fileTree->addTreeItem(treeItem);
+	//		//-------------------------------------
+
+	//		_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
+	//		LOG("_____________");
+	//	}
+	//} while (FindNextFile(hFind, &ffd) != 0);
+
+
+
+	return TASK_SUCCESS;
 }
 
 
@@ -258,7 +231,8 @@ BOOL MY_FILES::FILE_TREE::isItemExists(std::vector<FILE_TREE_STRUCT*>& tree, LPC
 
 MY_FILES::FILE_TREE::FILE_TREE()
 {
-
+	std::cout << "FILE_TREE constructor called" << std::endl;
+	
 }
 
 errno_t MY_FILES::FILE_TREE::addTreeItem(FILE_TREE_STRUCT treeItem)
@@ -305,6 +279,32 @@ errno_t MY_FILES::FILE_TREE::getFileNameFromPath(LPCWSTR path, LPCWSTR* destinat
 	wcscpy_s(newDrive, size + 1, drive);
 	*destination = newDrive;
 	return TASK_SUCCESS;
+}
+
+MY_FILES::FILE_TREE_STRUCT MY_FILES::FILE_TREE::createTreeStruct(std::string& newPath, const char* path, WIN32_FIND_DATA& ffd, size_t level, LPCSTR fileType)
+{
+	newPath = path;
+	LOG("---------------");
+	LOG(level);
+	const wchar_t* a = getWC(path);
+	//create tree items object-----------------
+	MY_FILES::FILE_TREE_STRUCT treeItem = { 0 };
+	treeItem.name = getWC(ffd.cFileName);
+	treeItem.level = level;
+	treeItem.parentName = nullptr;
+	treeItem.type = fileType;
+	treeItem.path = getWC(path);
+
+	//get parent directory name from path----
+	if (level > 1) {
+		LPCWSTR ParentDirName = nullptr;
+		errno_t err = getFileNameFromPath(getWC(path), &ParentDirName);
+		if (!err)
+			treeItem.parentName = ParentDirName;
+	}
+	//---------------------------------------
+
+	return treeItem;
 }
 
 size_t MY_FILES::FILE_TREE::getArrayCount(WCHAR arr[])
@@ -374,6 +374,3 @@ const wchar_t* getWC(const char* c) {
 	return wc;
 }
 
-
-//static members definition
-MY_FILES::FILE_TREE _fileTree = { };

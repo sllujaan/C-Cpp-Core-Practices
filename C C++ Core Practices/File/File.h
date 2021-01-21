@@ -43,7 +43,7 @@ namespace  MY_FILES {
 		std::vector<FILE_TREE_STRUCT_CACHED> treeCached;
 
 		//file tree
-		static FILE_TREE _fileTree;
+		FILE_TREE* _fileTree;
 		
 		errno_t addTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
 		errno_t createPushTreeCach(size_t level, FILE_TREE_STRUCT& _tree);
@@ -55,7 +55,15 @@ namespace  MY_FILES {
 		//init cache
 		errno_t initTreeCach();
 		FTSPTR getTreeIitemsByLevel(size_t level);
-		static errno_t readDirToTree(const char* path, MY_FILES::FILE_TREE& tree = FILE_TREE::_fileTree, unsigned int level = 1);
+		errno_t readDirToTree(const char* path, unsigned int level = 1);
+
+		MY_FILES::FILE_TREE_STRUCT createTreeStruct(
+			std::string& newPath,
+			const char* path,
+			WIN32_FIND_DATA& ffd,
+			size_t level,
+			LPCSTR fileType
+		);
 
 		FILE_TREE_STRUCT* operator[] (size_t);
 
@@ -67,3 +75,5 @@ namespace  MY_FILES {
 
 	};
 }
+
+
