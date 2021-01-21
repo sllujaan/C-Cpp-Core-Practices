@@ -28,6 +28,9 @@ errno_t MY_FILES::FILE_TREE::initTreeCach()
 	//2. find tree item level.
 	//3. insert into treeCached
 
+	this->tree = this->_fileTree->tree;
+	this->treeCached = this->_fileTree->treeCached;
+
 
 	//1. iterate through all items of the tree
 	for (int i = 0; i < this->tree.size(); i++) {
@@ -43,7 +46,7 @@ errno_t MY_FILES::FILE_TREE::initTreeCach()
 FTSPTR MY_FILES::FILE_TREE::getTreeIitemsByLevel(size_t level)
 {
 	if (this->treeCached.size() == 0) {
-		std::cout << "cached tree in empty in: " << __FUNCTION__;
+		std::cout << "cached tree is empty in: " << __FUNCTION__;
 		std::cout<< " at line: "<<__LINE__<< std::endl;
 		return nullptr;
 	}
@@ -78,73 +81,73 @@ errno_t MY_FILES::FILE_TREE::readDirToTree(const char* path, unsigned int level)
 		this->_fileTree = new FILE_TREE();
 	}
 
-	//std::string newPath = path;
-	//newPath += +"\\*";
+	std::string newPath = path;
+	newPath += +"\\*";
 
-	//WIN32_FIND_DATA ffd;
-	//LARGE_INTEGER filesize;
-	//TCHAR szDir[MAX_PATH];
-	//strcpy_s<MAX_PATH>(szDir, newPath.c_str());
-	//HANDLE hFind = INVALID_HANDLE_VALUE;
-
-
-
-	//// Find the first file in the directory.
-	//hFind = FindFirstFile(szDir, &ffd);
-
-	//if (hFind == INVALID_HANDLE_VALUE)
-	//{
-	//	std::cout << "FindFirstFile failed" << std::endl;
-	//	return 1;
-	//}
+	WIN32_FIND_DATA ffd;
+	LARGE_INTEGER filesize;
+	TCHAR szDir[MAX_PATH];
+	strcpy_s<MAX_PATH>(szDir, newPath.c_str());
+	HANDLE hFind = INVALID_HANDLE_VALUE;
 
 
-	//// List all the files in the directory with some info about them.
+
+	// Find the first file in the directory.
+	hFind = FindFirstFile(szDir, &ffd);
+
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		std::cout << "FindFirstFile failed" << std::endl;
+		return 1;
+	}
 
 
-	//do
-	//{
-	//	if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-	//	{
-	//		LOG_ANY(_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName));
-	//		//_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
+	// List all the files in the directory with some info about them.
 
-	//		if (NOT_DIR(ffd.cFileName)) {
-	//			LOG("Not Directory");
-	//		}
-	//		else {
 
-	//			MY_FILES::FILE_TREE_STRUCT treeItem = this->createTreeStruct(newPath, path, ffd, level, "dir");
+	do
+	{
+		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			LOG_ANY(_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName));
+			//_tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
 
-	//			this->_fileTree->addTreeItem(treeItem);
-	//			//-------------------------------------
-	//			newPath.append("\\");
-	//			newPath.append(ffd.cFileName);
-	//			LOG(newPath);
-	//			LOG("---------------");
-	//			//readDir(newPath.c_str(), level + 1);
-	//			readDirToTree(newPath.c_str(), level + 1);
-	//		}
+			if (NOT_DIR(ffd.cFileName)) {
+				LOG("Not Directory");
+			}
+			else {
 
-	//	}
-	//	else
-	//	{
+				MY_FILES::FILE_TREE_STRUCT treeItem = this->createTreeStruct(newPath, path, ffd, level, "dir");
 
-	//		filesize.LowPart = ffd.nFileSizeLow;
-	//		filesize.HighPart = ffd.nFileSizeHigh;
-	//		LOG("_____________");
-	//		LOG(level);
-	//		LOG(path);
+				this->_fileTree->addTreeItem(treeItem);
+				//-------------------------------------
+				newPath.append("\\");
+				newPath.append(ffd.cFileName);
+				LOG(newPath);
+				LOG("---------------");
+				//readDir(newPath.c_str(), level + 1);
+				readDirToTree(newPath.c_str(), level + 1);
+			}
 
-	//		MY_FILES::FILE_TREE_STRUCT treeItem = this->createTreeStruct(newPath, path, ffd, level, "file");
+		}
+		else
+		{
 
-	//		this->_fileTree->addTreeItem(treeItem);
-	//		//-------------------------------------
+			filesize.LowPart = ffd.nFileSizeLow;
+			filesize.HighPart = ffd.nFileSizeHigh;
+			LOG("_____________");
+			LOG(level);
+			LOG(path);
 
-	//		_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
-	//		LOG("_____________");
-	//	}
-	//} while (FindNextFile(hFind, &ffd) != 0);
+			MY_FILES::FILE_TREE_STRUCT treeItem = this->createTreeStruct(newPath, path, ffd, level, "file");
+
+			this->_fileTree->addTreeItem(treeItem);
+			//-------------------------------------
+
+			_tprintf(TEXT("  %s   %ld bytes\n"), ffd.cFileName, filesize.QuadPart);
+			LOG("_____________");
+		}
+	} while (FindNextFile(hFind, &ffd) != 0);
 
 
 
