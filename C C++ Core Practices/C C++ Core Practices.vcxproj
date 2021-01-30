@@ -179,6 +179,7 @@
     <ClInclude Include="FunctionPointers.h" />
     <ClInclude Include="ListDirectory.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="MemoryUsage.h" />
     <ClInclude Include="NameSpace.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="predefined_macros.h" />

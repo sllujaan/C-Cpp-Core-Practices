@@ -3,14 +3,24 @@
 
 #include"pch.h"
 #include"Log.h"
-#include"ListDirectory.h"
+#include"MemoryUsage.h"
 
-
+MemoryUsage memUsage;
 
 int main()
 {
-    initListDirToTree();
+    double* d = new double[4];
+    memset(d, 0, sizeof(double) * 4);
+    
+    std::cout << *d << std::endl;
+    std::cout << d << std::endl;
+    std::cout << &d << std::endl;
+    
+    printMemoryUsage();
+    delete d;
+    printMemoryUsage();
 
+    std::cout << &d << std::endl;
 
 #ifdef FTSPTR_USE
 
