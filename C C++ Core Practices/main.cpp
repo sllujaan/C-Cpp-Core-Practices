@@ -7,6 +7,7 @@
 
 MemoryUsage memUsage;
 
+
 int main()
 {
     double* d = new double[4];

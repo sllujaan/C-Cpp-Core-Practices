@@ -1,5 +1,6 @@
 #pragma once
 #include"pch.h"
+#include"Log.h"
 
 
 
@@ -8,6 +9,8 @@ struct MemoryUsage {
     uint32_t totalFreed = 0;
 
     uint32_t getCurrentUsage() { return totalAllocated - totalFreed; }
+
+    
 
 };
 
@@ -28,6 +31,24 @@ void operator delete(void* memory, size_t size) {
 }
 
 
-void printMemoryUsage() {
+void printMemoryUsageW() {
     std::cout << "Total Memory Usage: " << ::memUsage.getCurrentUsage() << std::endl;
 }
+
+void printMemoryUsageA() {
+    LOG(L"Total Memory Usage: ");
+    LOG_INT(::memUsage.getCurrentUsage());
+}
+
+#ifdef UNICODE
+#define printMemoryUsage printMemoryUsageW
+#else
+#define printMemoryUsage printMemoryUsageA
+#endif // UNICODE
+
+
+
+
+
+
+
