@@ -3,26 +3,22 @@
 
 #include"pch.h"
 #include"Log.h"
-#include"MemoryUsage.h"
+#include"Templates1.h"
 
-MemoryUsage memUsage;
+#define abcde int
+
+abcde;
+
+namespace abd {
+
+};
 
 
 int main()
 {
-    double* d = new double[4];
-    memset(d, 0, sizeof(double) * 4);
     
-    std::cout << *d << std::endl;
-    std::cout << d << std::endl;
-    std::cout << &d << std::endl;
+    Template1::init();
     
-    printMemoryUsage();
-    delete d;
-    printMemoryUsage();
-
-    std::cout << &d << std::endl;
-
 #ifdef FTSPTR_USE
 
     LPCWSTR NAMES[] = { L"abc.txt", L"abc1.txt",  L"abc2.txt",

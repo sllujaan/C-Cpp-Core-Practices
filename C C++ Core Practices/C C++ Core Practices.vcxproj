@@ -175,6 +175,7 @@
     <ClInclude Include="directory.h" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="FunctionPointers.h" />
+    <ClInclude Include="Templates1.h" />
     <ClInclude Include="ListDirectory.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MemoryUsage.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="predefined_macros.h" />
     <ClInclude Include="Sal_Annotations.h" />
     <ClInclude Include="Static.h" />
+    <ClInclude Include="Templates.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="TypeDefinition.h" />

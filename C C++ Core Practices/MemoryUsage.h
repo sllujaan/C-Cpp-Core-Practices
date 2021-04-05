@@ -10,8 +10,6 @@ struct MemoryUsage {
 
     uint32_t getCurrentUsage() { return totalAllocated - totalFreed; }
 
-    
-
 };
 
 
@@ -50,5 +48,17 @@ void printMemoryUsageA() {
 
 
 
+void init() {
+    double* d = new double[4];
+    memset(d, 0, sizeof(double) * 4);
 
+    std::cout << *d << std::endl;
+    std::cout << d << std::endl;
+    std::cout << &d << std::endl;
 
+    printMemoryUsage();
+    delete d;
+    printMemoryUsage();
+
+    std::cout << &d << std::endl;
+}
