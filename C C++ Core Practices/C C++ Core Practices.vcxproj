@@ -175,6 +175,8 @@
     <ClInclude Include="directory.h" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="FunctionPointers.h" />
+    <ClInclude Include="References.h" />
+    <ClInclude Include="Templates2.h" />
     <ClInclude Include="Templates1.h" />
     <ClInclude Include="ListDirectory.h" />
     <ClInclude Include="Log.h" />

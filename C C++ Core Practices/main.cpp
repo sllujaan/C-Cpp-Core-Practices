@@ -3,21 +3,21 @@
 
 #include"pch.h"
 #include"Log.h"
-#include"Templates1.h"
+#include"References.h"
 
-#define abcde int
-
-abcde;
-
-namespace abd {
-
-};
 
 
 int main()
 {
-    
-    Template1::init();
+    References::arr;
+
+    References::passByRefPtr(References::arr);
+
+    References::drawBreakLine(200000);
+
+    References::passByArr(References::arr);
+
+    std::cout << std::endl;
     
 #ifdef FTSPTR_USE
 

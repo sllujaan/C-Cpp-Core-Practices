@@ -29,6 +29,17 @@ void testit() {
 
 }
 
+
+
+template<class fn, class... args>
+struct ShaderAnimateStruct {
+    void printSize() {
+        int size = sizeof...(args);
+        std::cout << "size: " << size << std::endl;
+    }
+};
+
+
 template<class type, class... args>
 void testit(type _type, args... _args)
 {
@@ -57,6 +68,9 @@ void init()
     //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
     std::cout << _threadid << std::endl;
+
+    ShaderAnimateStruct<int, int> a;
+    a.printSize();
 
     // Start thread t1
     std::thread t1(testit<int, int, int>, 10, 20, 30);
